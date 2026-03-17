@@ -1,12 +1,5 @@
-/* ============================================================
-   MAIN.JS — App Logic: Navbar, Theme, Filters, Form, etc.
-   ============================================================ */
-
 'use strict';
 
-// ── CONFIG ────────────────────────────────────────────────
-// Change this to your deployed backend URL in production
-// e.g. 'https://psg-portfolio-backend.onrender.com'
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:3001'
   : 'https://priyanshuportfolio-g8ib.onrender.com'; // <-- update after deploying backend
