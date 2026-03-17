@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page Not Found · Priyanshu Gupta</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <style>
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .wrap { max-width: 520px; padding: var(--s4); position: relative; z-index: 1; }
+    .code {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 20vw, 10rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--indigo-light), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--s2);
+    }
+    h1 { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; margin-bottom: var(--s2); }
+    p  { color: var(--text-secondary); margin-bottom: var(--s5); line-height: 1.7; }
+    .actions { display: flex; gap: var(--s2); justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 12px; font-size: 0.9rem;
+      font-weight: 600; font-family: var(--font-body); transition: all .3s; text-decoration: none;
+    }
+    .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 20px rgba(99,102,241,.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,.5); }
+    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--indigo); color: var(--indigo-light); background: var(--indigo-dim); transform: translateY(-2px); }
+    .glitch { animation: glitch 3s infinite; }
+    @keyframes glitch {
+      0%,90%,100% { text-shadow: none; }
+      92% { text-shadow: -3px 0 var(--cyan), 3px 0 var(--rose); }
+      94% { text-shadow: 3px 0 var(--cyan), -3px 0 var(--rose); }
+      96% { text-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="code glitch">404</div>
+    <h1>Page not found</h1>
+    <p>Looks like this route doesn't exist — or maybe it drifted off into the void. Either way, let's get you back on track.</p>
+    <div class="actions">
+      <a href="index.html" class="btn btn-primary">⚡ Back to Portfolio</a>
+      <a href="index.html#contact" class="btn btn-outline">✉ Contact Me</a>
+    </div>
+  </div>
+</body>
+</html>

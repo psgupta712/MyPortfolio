@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Priyanshu Gupta — Full Stack Developer</title>
+  <meta name="description" content="Full Stack Developer · MERN Stack · Node.js · React · Real-Time Systems. B.Tech CSE at LPU, SDE Intern at CipherSchools." />
+  <meta name="keywords" content="Priyanshu Gupta, Full Stack Developer, MERN Stack, Node.js, React, JavaScript, LPU" />
+  <meta name="author" content="Priyanshu Gupta" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Priyanshu Gupta — Full Stack Developer" />
+  <meta property="og:description" content="Full Stack Developer · MERN Stack · Real-Time Systems · 200+ LeetCode" />
+  <meta property="og:url" content="https://psgupta.dev" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Priyanshu Gupta — Full Stack Developer" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+
+  <div id="page-loader">
+    <div class="loader-logo">Welcome</div>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <button id="back-top" aria-label="Back to top" title="Back to top">↑</button>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo" aria-label="Home">PSG.</a>
+        <div class="nav-links" role="menubar">
+          <a href="#about"          role="menuitem">About</a>
+          <a href="#skills"         role="menuitem">Skills</a>
+          <a href="#projects"       role="menuitem">Projects</a>
+          <a href="#experience"     role="menuitem">Experience</a>
+          <a href="#certifications" role="menuitem">Certs</a>
+          <a href="#timeline"       role="menuitem">Journey</a>
+          <a href="#contact"        role="menuitem">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+          <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation" role="dialog">
+    <a href="#about"          onclick="closeMobileNav()">About</a>
+    <a href="#skills"         onclick="closeMobileNav()">Skills</a>
+    <a href="#projects"       onclick="closeMobileNav()">Projects</a>
+    <a href="#experience"     onclick="closeMobileNav()">Experience</a>
+    <a href="#certifications" onclick="closeMobileNav()">Certs</a>
+    <a href="#timeline"       onclick="closeMobileNav()">Journey</a>
+    <a href="#contact"        onclick="closeMobileNav()">Contact</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Introduction">
+    <div class="container">
+      <div class="hero-content hero-animate">
+        <div class="hero-eyebrow">
+          <div class="hero-dot"></div>
+          <span>Available for opportunities</span>
+        </div>
+        <h1 class="hero-name">
+          <div class="first">Priyanshu</div>
+          <div class="last">Gupta</div>
+        </h1>
+        <div class="hero-role">
+          <span id="typing-text"></span><span class="typing-cursor" aria-hidden="true"></span>
+        </div>
+        <p class="hero-desc">
+          I build <strong>fast, scalable, and real-world web applications</strong> — from architecting backend systems with Node.js to crafting sharp, accessible UIs. Currently exploring the intersection of software engineering and intelligent systems.
+        </p>
+        
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary"><span>⚡</span> View Projects</a>
+          <a href="#contact"  class="btn btn-outline"><span>✉</span> Contact Me</a>
+          <a href="https://github.com/psgupta712" target="_blank" rel="noopener" class="btn btn-ghost"><span>⌥</span> GitHub</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num">3+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">4+</span>
+            <span class="stat-label">Certifications</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">1</span>
+            <span class="stat-label">Internship</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal-left">
+          <div class="about-avatar-wrap">
+            <div class="avatar-card float"><span aria-hidden="true">👨‍💻</span></div>
+            <div class="avatar-badge">MERN Stack Dev 🚀</div>
+          </div>
+        </div>
+        <div class="reveal-right">
+          <p class="section-label">About Me</p>
+          <h2 class="section-title" id="about-heading">
+            Engineering ideas into<br><span>real-world products</span>
+          </h2>
+          <p>
+            Hey! I'm <strong>Priyanshu Gupta</strong> — a passionate Full Stack Developer and
+            B.Tech CSE student at <strong>Lovely Professional University</strong>. I love
+            turning complex problems into clean and elegant softwares.
+          </p>
+          <p>
+            My journey started with <strong>C++ and object-oriented programming</strong>, grew into
+            full-stack engineering with the <strong>MERN stack</strong> I gained hands-on professional experience as a
+            <strong>Software Development Intern at CipherSchools</strong>, where I worked on multiple projects.
+          </p>
+          <p>
+            Outside code: 
+            Exploring how generative AI is reshaping the developer toolchain.
+          </p>
+          <div class="about-highlights">
+            <div class="highlight-item"><span class="icon">🎯</span> Problem Solver</div>
+            <div class="highlight-item"><span class="icon">⚡</span> Performance Focused</div>
+            <div class="highlight-item"><span class="icon">🌐</span> MERN Stack Engineer</div>
+            <div class="highlight-item"><span class="icon">📚</span> Continuous Learner</div>
+            <div class="highlight-item"><span class="icon">🤖</span> AI Enthusiast</div>
+            <div class="highlight-item"><span class="icon">🔄</span> Agile Practitioner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section" aria-labelledby="skills-heading">
+    <div class="container">
+      <p class="section-label reveal">Skills &amp; Tech</p>
+      <h2 class="section-title reveal delay-1" id="skills-heading">Tools of the <span>trade</span></h2>
+      <p class="text-muted reveal delay-2" style="max-width:520px; margin-bottom: var(--s5);">
+        Technologies I work with daily — organized by domain and proficiency.
+      </p>
+      <div class="skills-tabs reveal delay-3" role="tablist" aria-label="Skill categories">
+        <button class="skill-tab active" role="tab" aria-selected="true"  data-tab="frontend">Frontend</button>
+        <button class="skill-tab"        role="tab" aria-selected="false" data-tab="backend">Backend</button>
+        <button class="skill-tab"        role="tab" aria-selected="false" data-tab="tools">Tools &amp; Others</button>
+      </div>
+
+      <div class="skills-panel active" id="panel-frontend" role="tabpanel">
+        <div class="skills-grid">
+          <div class="skill-card reveal delay-1"><div class="skill-icon">🌐</div><div class="skill-name">HTML5 / CSS3</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 90%"></div></div></div>
+          <div class="skill-card reveal delay-2"><div class="skill-icon">⚡</div><div class="skill-name">JavaScript (ES6+)</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 85%"></div></div></div>
+          <div class="skill-card reveal delay-3"><div class="skill-icon">⚛️</div><div class="skill-name">React.js</div><div class="skill-level">Intermediate</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 75%"></div></div></div>
+          <div class="skill-card reveal delay-4"><div class="skill-icon">🎨</div><div class="skill-name">Bootstrap / Tailwind</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 82%"></div></div></div>
+          <div class="skill-card reveal delay-5"><div class="skill-icon">🔌</div><div class="skill-name">Socket.io</div><div class="skill-level">Intermediate</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 72%"></div></div></div>
+          <div class="skill-card reveal delay-6"><div class="skill-icon">🗺️</div><div class="skill-name">Leaflet.js</div><div class="skill-level">Intermediate</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 68%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skills-panel" id="panel-backend" role="tabpanel">
+        <div class="skills-grid">
+          <div class="skill-card reveal delay-1"><div class="skill-icon">🟢</div><div class="skill-name">Node.js</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 85%"></div></div></div>
+          <div class="skill-card reveal delay-2"><div class="skill-icon">🚂</div><div class="skill-name">Express.js</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 84%"></div></div></div>
+          <div class="skill-card reveal delay-3"><div class="skill-icon">🍃</div><div class="skill-name">MongoDB</div><div class="skill-level">Intermediate</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 78%"></div></div></div>
+          <div class="skill-card reveal delay-4"><div class="skill-icon">🐘</div><div class="skill-name">MySQL</div><div class="skill-level">Intermediate</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 72%"></div></div></div>
+          <div class="skill-card reveal delay-5"><div class="skill-icon">🔑</div><div class="skill-name">REST APIs / JWT</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 86%"></div></div></div>
+          <div class="skill-card reveal delay-6"><div class="skill-icon">☕</div><div class="skill-name">Java</div><div class="skill-level">Intermediate</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 70%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skills-panel" id="panel-tools" role="tabpanel">
+        <div class="skills-grid">
+          <div class="skill-card reveal delay-1"><div class="skill-icon">📦</div><div class="skill-name">Git / GitHub</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 88%"></div></div></div>
+          <div class="skill-card reveal delay-2"><div class="skill-icon">📬</div><div class="skill-name">Postman</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 85%"></div></div></div>
+          <div class="skill-card reveal delay-3"><div class="skill-icon">▲</div><div class="skill-name">Vercel / Render</div><div class="skill-level">Intermediate</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 80%"></div></div></div>
+          <div class="skill-card reveal delay-4"><div class="skill-icon">➕</div><div class="skill-name">C++ / Python</div><div class="skill-level">Advanced</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 82%"></div></div></div>
+          <div class="skill-card reveal delay-5"><div class="skill-icon">🔄</div><div class="skill-name">Agile / Scrum</div><div class="skill-level">Certified</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 76%"></div></div></div>
+          <div class="skill-card reveal delay-6"><div class="skill-icon">🤖</div><div class="skill-name">Generative AI</div><div class="skill-level">Certified</div><div class="skill-bar"><div class="skill-bar-fill" style="--target: 65%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section" style="background: var(--bg-secondary);" aria-labelledby="projects-heading">
+    <div class="container">
+      <p class="section-label reveal">My Work</p>
+      <h2 class="section-title reveal delay-1" id="projects-heading">Featured <span>Projects</span></h2>
+      <p class="text-muted reveal delay-2" style="max-width:520px; margin-bottom: var(--s5);">
+        Real-world applications designed, built, and deployed end-to-end — with measurable impact.
+      </p>
+
+      <div class="projects-filter reveal delay-3" role="group" aria-label="Filter projects">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+        <button class="filter-btn" data-filter="realtime">Real-Time</button>
+        <button class="filter-btn" data-filter="backend">Backend</button>
+      </div>
+
+      <div class="projects-grid" id="projects-grid">
+
+        <!-- Real-Time Tracker — Feb 2026 -->
+        <article class="project-card tilt reveal delay-1" data-category="realtime backend">
+          <div class="project-preview" style="background: linear-gradient(135deg, #041b14, #0a1a10);">
+            <div class="project-preview-icon">📍</div>
+            <div class="project-preview-overlay">
+              <a href="https://realtime-device-tracker-1-hq64.onrender.com/" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:0.8rem;padding:8px 16px;">Live Demo</a>
+              <a href="https://github.com/psgupta712/RealTime-Device-Tracker" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">Code</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">Socket.io</span>
+              <span class="project-tag">Leaflet.js</span>
+              <span class="project-tag">Geolocation API</span>
+              <span class="project-tag">Render</span>
+            </div>
+            <h3 class="project-title">Real-Time Location Sync System</h3>
+            <p class="project-desc">
+              WebSocket-based live tracking for 50+ concurrent users. Room-scoped broadcasting cuts network traffic by 35%.
+              Optimised geolocation updates improve UI responsiveness by 30%.
+            </p>
+            <div style="font-size:0.75rem;color:var(--indigo-light);font-weight:600;margin-bottom:var(--s2);">📅 Feb 2026</div>
+            <div class="project-links">
+              <a href="https://realtime-device-tracker-1-hq64.onrender.com/" target="_blank" rel="noopener" class="project-link primary">↗ Live Demo</a>
+              <a href="https://github.com/psgupta712/RealTime-Device-Tracker" target="_blank" rel="noopener" class="project-link">⌥ GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Hotel Reservation — Dec 2025 -->
+        <article class="project-card tilt reveal delay-2" data-category="fullstack backend">
+          <div class="project-preview" style="background: linear-gradient(135deg, #0a1628, #0b1a2e);">
+            <div class="project-preview-icon">🏨</div>
+            <div class="project-preview-overlay">
+              <a href="https://gupta-hotels.vercel.app" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:0.8rem;padding:8px 16px;">Live Demo</a>
+              <a href="https://github.com/psgupta712/Gupta-Hotels" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">Code</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">MongoDB</span>
+              <span class="project-tag">Express.js</span>
+              <span class="project-tag">React.js</span>
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">JWT</span>
+            </div>
+            <h3 class="project-title">Hotel Reservation System</h3>
+            <p class="project-desc">
+              Full MERN stack hotel booking platform with RESTful API. Dynamic search cuts response time by 40%.
+              Room availability validation prevents double bookings entirely.
+            </p>
+            <div style="font-size:0.75rem;color:var(--indigo-light);font-weight:600;margin-bottom:var(--s2);">📅 Dec 2025</div>
+            <div class="project-links">
+              <a href="https://gupta-hotels.vercel.app" target="_blank" rel="noopener" class="project-link primary">↗ Live Demo</a>
+              <a href="https://github.com/psgupta712/Gupta-Hotels" target="_blank" rel="noopener" class="project-link">⌥ GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Blog Platform — Oct 2025 -->
+        <article class="project-card tilt reveal delay-3" data-category="fullstack">
+          <div class="project-preview" style="background: linear-gradient(135deg, #1a1040, #0b0f19);">
+            <div class="project-preview-icon">📝</div>
+            <div class="project-preview-overlay">
+              <a href="https://blog-app-xucp.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:0.8rem;padding:8px 16px;">Live Demo</a>
+              <a href="https://github.com/psgupta712/BlogApp" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">Code</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">MERN Stack</span>
+              <span class="project-tag">JWT</span>
+              <span class="project-tag">Axios</span>
+              <span class="project-tag">React Context</span>
+              <span class="project-tag">Vercel</span>
+            </div>
+            <h3 class="project-title">Blogging Platform</h3>
+            <p class="project-desc">
+              Blogging platform for 200+ users with JWT auth. Dynamic filtering reduces load time by 45%.
+              React Context API manages sessions, cutting re-authentication by 60%.
+            </p>
+            <div style="font-size:0.75rem;color:var(--indigo-light);font-weight:600;margin-bottom:var(--s2);">📅 Oct 2025</div>
+            <div class="project-links">
+              <a href="https://blog-app-xucp.vercel.app/" target="_blank" rel="noopener" class="project-link primary">↗ Live Demo</a>
+              <a href="https://github.com/psgupta712/BlogApp" target="_blank" rel="noopener" class="project-link">⌥ GitHub</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section" aria-labelledby="exp-heading">
+    <div class="container">
+      <p class="section-label reveal">Work Experience</p>
+      <h2 class="section-title reveal delay-1" id="exp-heading">Where I've <span>worked</span></h2>
+
+      <div class="timeline reveal delay-2" role="list">
+        <div class="timeline-item" role="listitem">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Jun 2024 — Jul 2024</div>
+          <div class="timeline-role">Software Development Intern</div>
+          <div class="timeline-company">CipherSchools · Remote</div>
+          <div class="timeline-desc">
+            Developed <strong>3+ full-stack applications</strong> using the MERN stack during a fast-paced remote
+            internship. Implemented JWT-based authentication with protected routes, improving application security.
+            Performed API testing using Postman, reducing bug resolution time by <strong>30%</strong>.
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+            <span class="badge">MERN Stack</span>
+            <span class="badge">JWT Auth</span>
+            <span class="badge">Postman</span>
+            <span class="badge">REST APIs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" class="section" style="background: var(--bg-secondary);" aria-labelledby="certs-heading">
+    <div class="container">
+      <p class="section-label reveal">Credentials</p>
+      <h2 class="section-title reveal delay-1" id="certs-heading">Certifications &amp; <span>Learning</span></h2>
+      <p class="text-muted reveal delay-2" style="max-width:520px; margin-bottom: var(--s5);">
+        Verified learning from top Coursera institutions — covering engineering, AI and project management.
+      </p>
+
+      <div class="certs-grid">
+        <div class="cert-card reveal delay-1">
+          <div class="cert-icon">🔄</div>
+          <div class="cert-issuer">Coursera · University of Colorado · Nov 2025</div>
+          <div class="cert-name">Agile Project Management</div>
+          <p style="font-size:0.8rem;color:var(--text-muted);">Agile frameworks, Scrum ceremonies, sprint planning &amp; stakeholder management.</p>
+          <a href="https://drive.google.com/file/d/1QG_wqFpT17mXam8n4XwP3hczF0Wwag9g/view?usp=sharing" target="_blank" rel="noopener" class="cert-link">View Certificate →</a>
+        </div>
+        <div class="cert-card reveal delay-2">
+          <div class="cert-icon">🟢</div>
+          <div class="cert-issuer">Coursera · NIIT · May 2024</div>
+          <div class="cert-name">Server Side JavaScript with Node.js</div>
+          <p style="font-size:0.8rem;color:var(--text-muted);">Event loop, async patterns, Express routing, REST APIs &amp; server architecture.</p>
+          <a href="https://drive.google.com/file/d/17cAOSGNBKgCbOjAeAy670O3EAo-AQpVZ/view?usp=sharing" target="_blank" rel="noopener" class="cert-link">View Certificate →</a>
+        </div>
+        <div class="cert-card reveal delay-3">
+          <div class="cert-icon">➕</div>
+          <div class="cert-issuer">Coursera · Codio · Feb 2024</div>
+          <div class="cert-name">OOP C++: Inheritance &amp; Encapsulation</div>
+          <p style="font-size:0.8rem;color:var(--text-muted);">Object-oriented design principles, inheritance hierarchies, and encapsulation in C++.</p>
+          <a href="https://drive.google.com/file/d/194dA93l_3Hca-7J11twsKZee4GldEhah/view?usp=sharing" target="_blank" rel="noopener" class="cert-link">View Certificate →</a>
+        </div>
+        <div class="cert-card reveal delay-4">
+          <div class="cert-icon">🤖</div>
+          <div class="cert-issuer">Coursera · Google · Jan 2024</div>
+          <div class="cert-name">Introduction to Generative AI</div>
+          <p style="font-size:0.8rem;color:var(--text-muted);">Fundamentals of LLMs, prompt engineering, AI limitations, and responsible AI usage.</p>
+          <a href="https://drive.google.com/file/d/1zm30flGoMIoG4puAMkOh6oh0vrN47-i9/view?usp=sharing" target="_blank" rel="noopener" class="cert-link">View Certificate →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE / MY STORY -->
+  <section id="timeline" class="section" aria-labelledby="timeline-heading">
+    <div class="container">
+      <p class="section-label reveal">Education &amp; Journey</p>
+      <h2 class="section-title reveal delay-1" id="timeline-heading">My <span>Story</span></h2>
+
+      <div class="timeline reveal delay-2" role="list">
+        <div class="timeline-item" role="listitem">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Aug 2022 — Present</div>
+          <div class="timeline-role">B.Tech Computer Science &amp; Engineering</div>
+          <div class="timeline-company">Lovely Professional University · Phagwara, Punjab · CGPA: 7.34/10</div>
+          <div class="timeline-desc">
+            Building deep CS foundations — data structures, algorithms, OOP, DBMS, OS, and software engineering.
+          </div>
+        </div>
+
+        <div class="timeline-item" role="listitem">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Mar 2021</div>
+          <div class="timeline-role">Intermediate · 95.2%</div>
+          <div class="timeline-company">DS Science Academy · Gangapur City, Rajasthan</div>
+          <div class="timeline-desc">
+            Completed Intermediate with a strong 95.2% — the academic foundation for pursuing Computer Science Engineering.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section" style="background: var(--bg-secondary);" aria-labelledby="contact-heading">
+    <div class="container">
+      <p class="section-label reveal">Get In Touch</p>
+      <h2 class="section-title reveal delay-1" id="contact-heading">Let's build something <span>together</span></h2>
+
+      <div class="contact-grid">
+        <div class="reveal-left">
+          <div class="contact-info">
+            <h3>Open to opportunities</h3>
+            <p>
+              I'm currently looking for full-time SDE roles and open-source collaborations.
+              Whether you have a quick question or a big idea — I'm all ears.
+            </p>
+            <div class="contact-links">
+              <a href="https://www.linkedin.com/in/psgupta712/" target="_blank" rel="noopener" class="contact-link-item">
+                <div class="icon">💼</div>
+                <div>
+                  <div style="font-weight:600;font-size:0.875rem;color:var(--text-primary)">LinkedIn</div>
+                  <div style="font-size:0.8rem">psgupta712</div>
+                </div>
+              </a>
+              <a href="https://github.com/psgupta712" target="_blank" rel="noopener" class="contact-link-item">
+                <div class="icon">⌥</div>
+                <div>
+                  <div style="font-weight:600;font-size:0.875rem;color:var(--text-primary)">GitHub</div>
+                  <div style="font-size:0.8rem">psgupta712</div>
+                </div>
+              </a>
+              <a href="mailto:priyanshugupta14441@gmail.com" class="contact-link-item">
+                <div class="icon">✉️</div>
+                <div>
+                  <div style="font-weight:600;font-size:0.875rem;color:var(--text-primary)">Email</div>
+                  <div style="font-size:0.8rem">priyanshugupta14441@gmail.com</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal-right">
+          <form class="contact-form" id="contact-form" novalidate aria-label="Contact form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-name">Your Name</label>
+                <input type="text" id="cf-name" name="name" placeholder="John Doe" autocomplete="name" />
+                <span class="form-error" id="name-error">Please enter your name.</span>
+              </div>
+              <div class="form-group">
+                <label for="cf-email">Email Address</label>
+                <input type="email" id="cf-email" name="email" placeholder="john@example.com" autocomplete="email" />
+                <span class="form-error" id="email-error">Please enter a valid email.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf-subject">Subject</label>
+              <input type="text" id="cf-subject" name="subject" placeholder="Let's collaborate on..." />
+              <span class="form-error" id="subject-error">Please enter a subject.</span>
+            </div>
+            <div class="form-group">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" name="message" rows="5" placeholder="Tell me about your project, idea, or just say hi!"></textarea>
+              <span class="form-error" id="message-error">Please write a message (min. 10 characters).</span>
+            </div>
+            <div id="api-error" style="display:none; color:var(--rose); font-size:0.85rem; padding:10px 14px; border-radius:8px; background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.2);"></div>
+            <button type="submit" class="btn btn-primary" id="form-submit" style="align-self:flex-start">
+              <span id="submit-text">Send Message ✉</span>
+            </button>
+            <div class="form-success" id="form-success" role="alert">
+              <div class="success-icon">🎉</div>
+              <h4 style="font-family:var(--font-display);margin-bottom:8px">Message Sent!</h4>
+              <p>Thank you! Priyanshu will get back to you within 24 hours. Check your inbox for a confirmation.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">© 2026 <span>Priyanshu Gupta</span> · Built with ❤️ and lots of ☕  ·  +91-8112293712</div>
+        <div class="footer-links">
+          <a href="https://github.com/psgupta712" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/psgupta712/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#hero">Top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"      defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/main.js"       defer></script>
+</body>
+</html>
