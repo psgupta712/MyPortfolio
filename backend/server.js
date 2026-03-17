@@ -1,45 +1,27 @@
+/* ============================================================
+   SERVER.JS — Contact Form Backend
+   Stack: Node.js + Express + Nodemailer
+   Sends email to priyanshugupta14441@gmail.com on form submit
+   ============================================================ */
+
 const express    = require('express');
 const nodemailer = require('nodemailer');
 const cors       = require('cors');
-const path       = require('path');
 require('dotenv').config();
 
 const app  = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(express.static(path.join(__dirname)));
-
 /* ─── MIDDLEWARE ─────────────────────────────────────────── */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Allow requests from frontend — accepts localhost on any port during dev
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  'http://localhost:5500',
-  'http://127.0.0.1:5500',
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-  'http://localhost:8080',
-  'http://127.0.0.1:8080',
-].filter(Boolean);
-
+// Allow requests from your frontend (update origin in production)
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (curl, Postman, mobile)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    // Allow any deployed HTTPS URL in production
-    if (origin.startsWith('https://')) return callback(null, true);
-    callback(new Error('CORS blocked: ' + origin));
-  },
+  origin: process.env.FRONTEND_URL || '*',
   methods: ['POST', 'GET', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
-  credentials: true,
 }));
-
-// Handle preflight OPTIONS requests explicitly
-app.options('*', cors());
 
 /* ─── NODEMAILER TRANSPORTER ─────────────────────────────── */
 // Uses Gmail App Password (see README for setup)
@@ -243,10 +225,6 @@ app.post('/api/contact', async (req, res) => {
       message: 'Failed to send message. Please try again or email me directly.',
     });
   }
-});
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 /* ─── START ──────────────────────────────────────────────── */
