@@ -1,7 +1,15 @@
+/* ============================================================
+   MAIN.JS — App Logic: Navbar, Theme, Filters, Form, etc.
+   ============================================================ */
+
 'use strict';
 
-
-const API_BASE = '';
+// ── CONFIG ────────────────────────────────────────────────
+// Change this to your deployed backend URL in production
+// e.g. 'https://psg-portfolio-backend.onrender.com'
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3001'
+  : 'https://priyanshuportfolio-g8ib.onrender.com'; // <-- update after deploying backend
 
 /* ─── PAGE LOADER ────────────────────────────────────────── */
 function initLoader() {
@@ -223,13 +231,8 @@ function initContactForm() {
     } catch (err) {
       // ❌ Network error or server down
       if (apiErrBox) {
-        const isNetworkErr = err.message.includes('Failed to fetch')
-                          || err.message.includes('NetworkError')
-                          || err.message.includes('CORS');
-        apiErrBox.innerHTML = isNetworkErr
-          ? `⚠️ <strong>Backend not running.</strong> Make sure you started the server:<br>
-             <code style="font-size:0.8rem;color:var(--cyan)">cd backend &nbsp;→&nbsp; npm install &nbsp;→&nbsp; npm start</code><br>
-             Or email directly: <a href="mailto:priyanshugupta14441@gmail.com" style="color:var(--indigo-light)">priyanshugupta14441@gmail.com</a>`
+        apiErrBox.textContent = err.message.includes('Failed to fetch')
+          ? '⚠️ Could not reach the server. Please email me directly at priyanshugupta14441@gmail.com'
           : `⚠️ ${err.message}`;
         apiErrBox.style.display = 'block';
       }
