@@ -1,135 +1,56 @@
-/* ============================================================
-   SERVER.JS — Contact Form Backend
-   Stack: Node.js + Express + Nodemailer
-   Sends email to priyanshugupta14441@gmail.com on form submit
-   ============================================================ */
-
-const express    = require('express');
-const nodemailer = require('nodemailer');
-const cors       = require('cors');
+const express = require('express');
+const cors    = require('cors');
+const { Resend } = require('resend');
 require('dotenv').config();
 
-const app  = express();
-const PORT = process.env.PORT || 3001;
+const app    = express();
+const PORT   = process.env.PORT || 3001;
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /* ─── MIDDLEWARE ─────────────────────────────────────────── */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Allow requests from your frontend (update origin in production)
+/* ─── CORS ───────────────────────────────────────────────── */
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    const cleanOrigin = origin.replace(/\/$/, '');
+    if (allowedOrigins.map(o => o.replace(/\/$/, '')).includes(cleanOrigin)) return callback(null, true);
+    if (cleanOrigin.startsWith('https://')) return callback(null, true);
+    callback(new Error('CORS blocked: ' + origin));
+  },
   methods: ['POST', 'GET', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
+  credentials: true,
 }));
+app.options('*', cors());
 
-/* ─── NODEMAILER TRANSPORTER ─────────────────────────────── */
-// Uses Gmail App Password (see README for setup)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.SMTP_USER,   // your Gmail: priyanshugupta14441@gmail.com
-    pass: process.env.SMTP_PASS,   // Gmail App Password (16-char, NOT your real password)
-  },
-});
-
-// Verify connection on startup
-transporter.verify((err) => {
-  if (err) {
-    console.error('❌ Mail transporter error:', err.message);
-  } else {
-    console.log('✅ Mail transporter ready');
-  }
-});
-
-/* ─── RATE LIMIT (simple in-memory, no extra lib) ───────── */
+/* ─── RATE LIMIT ─────────────────────────────────────────── */
 const rateLimitMap = new Map();
-
 function rateLimit(ip) {
   const now = Date.now();
-  const windowMs = 15 * 60 * 1000; // 15 minutes
-  const max = 3; // max 3 emails per IP per window
-
+  const windowMs = 15 * 60 * 1000;
+  const max = 3;
   const entry = rateLimitMap.get(ip) || { count: 0, start: now };
-
   if (now - entry.start > windowMs) {
-    // Reset window
     rateLimitMap.set(ip, { count: 1, start: now });
-    return false; // not limited
+    return false;
   }
-
   entry.count++;
   rateLimitMap.set(ip, entry);
-
-  return entry.count > max; // true = blocked
+  return entry.count > max;
 }
 
-/* ─── EMAIL TEMPLATES ────────────────────────────────────── */
-function buildEmailHTML(name, email, subject, message) {
-  return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Portfolio Message</title>
-  <style>
-    body { margin: 0; padding: 0; background: #0b0f19; font-family: 'Segoe UI', sans-serif; }
-    .wrapper { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
-    .card { background: #0f1424; border: 1px solid rgba(99,102,241,0.3); border-radius: 16px; overflow: hidden; }
-    .header { background: linear-gradient(135deg, #6366f1, #06b6d4); padding: 32px; text-align: center; }
-    .header h1 { color: #fff; margin: 0; font-size: 24px; font-weight: 700; }
-    .header p { color: rgba(255,255,255,0.8); margin: 8px 0 0; font-size: 14px; }
-    .body { padding: 32px; }
-    .field { margin-bottom: 24px; }
-    .label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #818cf8; margin-bottom: 6px; }
-    .value { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 16px; color: #f1f5f9; font-size: 15px; line-height: 1.6; }
-    .message-value { white-space: pre-wrap; min-height: 80px; }
-    .footer { padding: 20px 32px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
-    .footer p { color: #475569; font-size: 12px; margin: 0; }
-    .reply-btn { display: inline-block; margin-top: 20px; padding: 12px 28px; background: #6366f1; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; }
-  </style>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="card">
-      <div class="header">
-        <h1>📬 New Portfolio Message</h1>
-        <p>Someone reached out via your portfolio contact form</p>
-      </div>
-      <div class="body">
-        <div class="field">
-          <div class="label">From</div>
-          <div class="value">${escapeHtml(name)}</div>
-        </div>
-        <div class="field">
-          <div class="label">Email</div>
-          <div class="value">${escapeHtml(email)}</div>
-        </div>
-        <div class="field">
-          <div class="label">Subject</div>
-          <div class="value">${escapeHtml(subject)}</div>
-        </div>
-        <div class="field">
-          <div class="label">Message</div>
-          <div class="value message-value">${escapeHtml(message)}</div>
-        </div>
-        <div style="text-align:center">
-          <a href="mailto:${escapeHtml(email)}?subject=Re: ${encodeURIComponent(subject)}" class="reply-btn">
-            Reply to ${escapeHtml(name)} →
-          </a>
-        </div>
-      </div>
-      <div class="footer">
-        <p>Sent via psgupta.dev portfolio · ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST</p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-  `;
-}
-
+/* ─── HTML ESCAPE ────────────────────────────────────────── */
 function escapeHtml(text) {
   return String(text)
     .replace(/&/g, '&amp;')
@@ -139,42 +60,70 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
-/* ─── ROUTES ─────────────────────────────────────────────── */
+/* ─── EMAIL TEMPLATE ─────────────────────────────────────── */
+function buildEmailHTML(name, email, subject, message) {
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#0b0f19;font-family:'Segoe UI',sans-serif;">
+  <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
+    <div style="background:#0f1424;border:1px solid rgba(99,102,241,0.3);border-radius:16px;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,#6366f1,#06b6d4);padding:32px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:24px;font-weight:700;">📬 New Portfolio Message</h1>
+        <p style="color:rgba(255,255,255,0.8);margin:8px 0 0;font-size:14px;">Someone reached out via your portfolio</p>
+      </div>
+      <div style="padding:32px;">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#818cf8;margin-bottom:6px;">From</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;color:#f1f5f9;">${escapeHtml(name)}</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#818cf8;margin-bottom:6px;">Email</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;color:#f1f5f9;">${escapeHtml(email)}</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#818cf8;margin-bottom:6px;">Subject</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;color:#f1f5f9;">${escapeHtml(subject)}</div>
+        </div>
+        <div style="margin-bottom:28px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#818cf8;margin-bottom:6px;">Message</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;color:#f1f5f9;white-space:pre-wrap;min-height:80px;">${escapeHtml(message)}</div>
+        </div>
+        <div style="text-align:center;">
+          <a href="mailto:${escapeHtml(email)}?subject=Re: ${encodeURIComponent(subject)}"
+             style="display:inline-block;padding:12px 28px;background:#6366f1;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px;">
+            Reply to ${escapeHtml(name)} →
+          </a>
+        </div>
+      </div>
+      <div style="padding:20px 32px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
+        <p style="color:#475569;font-size:12px;margin:0;">Sent via portfolio · ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+}
 
-// Health check
+/* ─── ROUTES ─────────────────────────────────────────────── */
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Contact form submission
 app.post('/api/contact', async (req, res) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
 
-  // Rate limiting
   if (rateLimit(ip)) {
-    return res.status(429).json({
-      success: false,
-      message: 'Too many requests. Please wait 15 minutes before trying again.',
-    });
+    return res.status(429).json({ success: false, message: 'Too many requests. Please wait 15 minutes.' });
   }
 
   const { name, email, subject, message } = req.body;
 
-  // Server-side validation
-  if (!name || name.trim().length < 2) {
-    return res.status(400).json({ success: false, message: 'Name must be at least 2 characters.' });
-  }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ success: false, message: 'Invalid email address.' });
-  }
-  if (!subject || subject.trim().length < 2) {
-    return res.status(400).json({ success: false, message: 'Subject is required.' });
-  }
-  if (!message || message.trim().length < 10) {
-    return res.status(400).json({ success: false, message: 'Message must be at least 10 characters.' });
-  }
+  if (!name    || name.trim().length    < 2)  return res.status(400).json({ success: false, message: 'Name must be at least 2 characters.' });
+  if (!email   || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ success: false, message: 'Invalid email address.' });
+  if (!subject || subject.trim().length < 2)  return res.status(400).json({ success: false, message: 'Subject is required.' });
+  if (!message || message.trim().length < 10) return res.status(400).json({ success: false, message: 'Message must be at least 10 characters.' });
 
-  // Sanitize
   const safe = {
     name:    name.trim().slice(0, 100),
     email:   email.trim().slice(0, 200),
@@ -183,46 +132,40 @@ app.post('/api/contact', async (req, res) => {
   };
 
   try {
-    // Email to Priyanshu
-    await transporter.sendMail({
-      from:    `"Portfolio Contact" <${process.env.SMTP_USER}>`,
-      to:      'priyanshugupta14441@gmail.com',
-      replyTo: safe.email,
-      subject: `[Portfolio] ${safe.subject}`,
-      text:    `From: ${safe.name} <${safe.email}>\n\n${safe.message}`,
-      html:    buildEmailHTML(safe.name, safe.email, safe.subject, safe.message),
+    // Notify Priyanshu
+    await resend.emails.send({
+      from:     'Portfolio <onboarding@resend.dev>',
+      to:       ['priyanshugupta14441@gmail.com'],
+      reply_to: safe.email,
+      subject:  `[Portfolio] ${safe.subject}`,
+      html:     buildEmailHTML(safe.name, safe.email, safe.subject, safe.message),
     });
 
     // Auto-reply to sender
-    await transporter.sendMail({
-      from:    `"Priyanshu Gupta" <${process.env.SMTP_USER}>`,
-      to:      safe.email,
-      subject: `Re: ${safe.subject} — Got your message!`,
+    await resend.emails.send({
+      from:    'Priyanshu Gupta <onboarding@resend.dev>',
+      to:      [safe.email],
+      subject: `Got your message! Re: ${safe.subject}`,
       html: `
         <div style="font-family:'Segoe UI',sans-serif;max-width:480px;margin:0 auto;padding:32px;background:#0f1424;color:#f1f5f9;border-radius:12px;border:1px solid rgba(99,102,241,0.25)">
           <h2 style="color:#818cf8;margin-top:0">Hey ${escapeHtml(safe.name)} 👋</h2>
           <p>Thanks for reaching out! I've received your message and will get back to you within <strong>24 hours</strong>.</p>
-          <p style="color:#94a3b8;font-size:14px">Your message: <em>"${escapeHtml(safe.subject)}"</em></p>
+          <p style="color:#94a3b8;font-size:14px">Your subject: <em>"${escapeHtml(safe.subject)}"</em></p>
           <hr style="border-color:rgba(255,255,255,0.08);margin:24px 0">
-          <p style="color:#94a3b8;font-size:13px">— Priyanshu Gupta<br>Full Stack Developer</p>
-          <a href="https://www.linkedin.com/in/psgupta712/" style="color:#6366f1;font-size:13px">LinkedIn</a> · 
+          <p style="color:#94a3b8;font-size:13px">— Priyanshu Gupta · Full Stack Developer</p>
+          <a href="https://www.linkedin.com/in/psgupta712/" style="color:#6366f1;font-size:13px">LinkedIn</a> ·
           <a href="https://github.com/psgupta712" style="color:#6366f1;font-size:13px">GitHub</a>
-        </div>
-      `,
+        </div>`,
     });
 
-    console.log(`📧 Contact from ${safe.name} <${safe.email}> — "${safe.subject}"`);
-
-    res.json({
-      success: true,
-      message: 'Message sent successfully! Check your inbox for a confirmation.',
-    });
+    console.log(`📧 Message from ${safe.name} <${safe.email}> — "${safe.subject}"`);
+    res.json({ success: true, message: 'Message sent! Check your inbox for a confirmation.' });
 
   } catch (err) {
-    console.error('❌ Mail send error:', err.message);
+    console.error('❌ Resend error:', err.message);
     res.status(500).json({
       success: false,
-      message: 'Failed to send message. Please try again or email me directly.',
+      message: 'Failed to send. Please email me directly at priyanshugupta14441@gmail.com',
     });
   }
 });
